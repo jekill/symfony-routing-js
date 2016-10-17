@@ -5,6 +5,6 @@
 ## Usage
 
 ```bash
-npm install symfony-routing-hs --save
+npm install symfony-routing-js --save
 ```
 
