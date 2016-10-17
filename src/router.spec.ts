@@ -46,18 +46,18 @@ describe('Test Router', () => {
     });
 
 
-    // function testGenerateUsesSchemeRequirements() {
-    //     var router = new Router({base_url: '/foo', host: "localhost"}, {
-    //         homepage: {
-    //             tokens: [['text', '/bar']],
-    //             defaults: {},
-    //             requirements: {"_scheme": "https"},
-    //             hosttokens: []
-    //         }
-    //     });
-    //
-    //     assert.equal('https://localhost/foo/bar', router.generate('homepage'));
-    // }
+    it('Should generate url with scheme', function () {
+        const router = new Router({base_url: '/foo', host: "localhost"}, {
+            homepage: {
+                tokens: [['text', '/bar']],
+                defaults: {},
+                requirements: {"_scheme": "https"},
+                hosttokens: []
+            }
+        });
+
+        assert.equal('https://localhost/foo/bar', router.generate('homepage'));
+    });
     //
     // function testGenerateUsesHost() {
     //     var router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
