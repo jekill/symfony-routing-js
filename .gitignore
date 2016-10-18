@@ -1,4 +1,6 @@
 build
+build/*.js.map
+
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs

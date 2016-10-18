@@ -58,147 +58,151 @@ describe('Test Router', () => {
 
         assert.equal('https://localhost/foo/bar', router.generate('homepage'));
     });
-    //
-    // function testGenerateUsesHost() {
-    //     var router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
-    //         homepage: {
-    //             tokens: [['text', '/bar']],
-    //             defaults: {},
-    //             requirements: {},
-    //             hosttokens: [['text', 'otherhost']]
-    //         }
-    //     });
-    //
-    //     assert.equal('http://otherhost/foo/bar', router.generate('homepage'));
-    // }
-    //
-    // function testGenerateUsesHostWhenTheSameSchemeRequirementGiven() {
-    //     var router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
-    //         homepage: {
-    //             tokens: [['text', '/bar']],
-    //             defaults: {},
-    //             requirements: {"_scheme": "http"},
-    //             hosttokens: [['text', 'otherhost']]
-    //         }
-    //     });
-    //
-    //     assert.equal('http://otherhost/foo/bar', router.generate('homepage'));
-    // }
-    //
-    // function testGenerateUsesHostWhenAnotherSchemeRequirementGiven() {
-    //     var router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
-    //         homepage: {
-    //             tokens: [['text', '/bar']],
-    //             defaults: {},
-    //             requirements: {"_scheme": "https"},
-    //             hosttokens: [['text', 'otherhost']]
-    //         }
-    //     });
-    //
-    //     assert.equal('https://otherhost/foo/bar', router.generate('homepage'));
-    // }
-    //
-    // function testGenerateSupportsHostPlaceholders() {
-    //     var router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
-    //         homepage: {
-    //             tokens: [['text', '/bar']],
-    //             defaults: {},
-    //             requirements: {},
-    //             hosttokens: [
-    //                 ['text', '.localhost'],
-    //                 ['variable', '', '', 'subdomain']
-    //             ]
-    //         }
-    //     });
-    //
-    //     assert.equal('http://api.localhost/foo/bar', router.generate('homepage', {subdomain: 'api'}));
-    // }
-    //
-    // function testGenerateSupportsHostPlaceholdersDefaults() {
-    //     var router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
-    //         homepage: {
-    //             tokens: [['text', '/bar']],
-    //             defaults: {subdomain: 'api'},
-    //             requirements: {},
-    //             hosttokens: [
-    //                 ['text', '.localhost'],
-    //                 ['variable', '', '', 'subdomain']
-    //             ]
-    //         }
-    //     });
-    //
-    //     assert.equal('http://api.localhost/foo/bar', router.generate('homepage'));
-    // }
-    //
-    // function testGenerateGeneratesRelativePathWhenTheSameHostGiven() {
-    //     var router = new Router({base_url: '/foo', host: "api.localhost", scheme: "http"}, {
-    //         homepage: {
-    //             tokens: [['text', '/bar']],
-    //             defaults: {},
-    //             requirements: {},
-    //             hosttokens: [
-    //                 ['text', '.localhost'],
-    //                 ['variable', '', '', 'subdomain']
-    //             ]
-    //         }
-    //     });
-    //
-    //     assert.equal('/foo/bar', router.generate('homepage', {subdomain: 'api'}));
-    // }
-    //
-    // function testGenerateUsesAbsoluteUrl() {
-    //     const router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
-    //         homepage: {
-    //             tokens: [['text', '/bar']],
-    //             defaults: {},
-    //             requirements: {},
-    //             hosttokens: []
-    //         }
-    //     });
-    //
-    //     assert.equal('http://localhost/foo/bar', router.generate('homepage', {}, true));
-    // }
-    //
-    // function testGenerateUsesAbsoluteUrlWhenSchemeRequirementGiven() {
-    //     const router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
-    //         homepage: {
-    //             tokens: [['text', '/bar']],
-    //             defaults: {},
-    //             requirements: {"_scheme": "http"},
-    //             hosttokens: []
-    //         }
-    //     });
-    //
-    //     assert.equal('http://localhost/foo/bar', router.generate('homepage', {}, true));
-    // }
-    //
-    // function testGenerateWithOptionalTrailingParam() {
-    //     const router = new Router({base_url: ''}, {
-    //         posts: {
-    //             tokens: [['variable', '.', '', '_format'], ['text', '/posts']],
-    //             defaults: {},
-    //             requirements: {},
-    //             hosttokens: []
-    //         }
-    //     });
-    //
-    //     assert.equal('/posts', router.generate('posts'));
-    //     assert.equal('/posts.json', router.generate('posts', {'_format': 'json'}));
-    // }
-    //
-    // function testGenerateQueryStringWithoutDefaults() {
-    //     const router = new Router({base_url: ''}, {
-    //         posts: {
-    //             tokens: [['variable', '/', '[1-9]+[0-9]*', 'page'], ['text', '/blog-posts']],
-    //             defaults: {'page': 1},
-    //             requirements: {},
-    //             hosttokens: []
-    //         }
-    //     });
-    //
-    //     assert.equal('/blog-posts?extra=1', router.generate('posts', {page: 1, extra: 1}));
-    // }
-    //
+
+    it('Should generate url with host', function () {
+
+
+        const router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
+            homepage: {
+                tokens: [['text', '/bar']],
+                defaults: {},
+                requirements: {},
+                hosttokens: [['text', 'otherhost']]
+            }
+        });
+
+        assert.equal('http://otherhost/foo/bar', router.generate('homepage'));
+    });
+
+    it('Should generate url with host when the same scheme requirement given', function () {
+        const router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
+            homepage: {
+                tokens: [['text', '/bar']],
+                defaults: {},
+                requirements: {"_scheme": "http"},
+                hosttokens: [['text', 'otherhost']]
+            }
+        });
+
+        assert.equal('http://otherhost/foo/bar', router.generate('homepage'));
+    });
+
+    it('Should generate an url with host when another scheme requirement given', function () {
+        const router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
+            homepage: {
+                tokens: [['text', '/bar']],
+                defaults: {},
+                requirements: {"_scheme": "https"},
+                hosttokens: [['text', 'otherhost']]
+            }
+        });
+
+        assert.equal('https://otherhost/foo/bar', router.generate('homepage'));
+    });
+
+    it('Should generate an url with host placeholders', function () {
+        const router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
+            homepage: {
+                tokens: [['text', '/bar']],
+                defaults: {},
+                requirements: {},
+                hosttokens: [
+                    ['text', '.localhost'],
+                    ['variable', '', '', 'subdomain']
+                ]
+            }
+        });
+
+        assert.equal('http://api.localhost/foo/bar', router.generate('homepage', {subdomain: 'api'}));
+    });
+
+
+    it('Should generate an url with host placeholders and defaults', function () {
+        const router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
+            homepage: {
+                tokens: [['text', '/bar']],
+                defaults: {subdomain: 'api'},
+                requirements: {},
+                hosttokens: [
+                    ['text', '.localhost'],
+                    ['variable', '', '', 'subdomain']
+                ]
+            }
+        });
+
+        assert.equal('http://api.localhost/foo/bar', router.generate('homepage'));
+    });
+
+
+    it('Should generate a relative path when the same host given', function () {
+        const router = new Router({base_url: '/foo', host: "api.localhost", scheme: "http"}, {
+            homepage: {
+                tokens: [['text', '/bar']],
+                defaults: {},
+                requirements: {},
+                hosttokens: [
+                    ['text', '.localhost'],
+                    ['variable', '', '', 'subdomain']
+                ]
+            }
+        });
+
+        assert.equal('/foo/bar', router.generate('homepage', {subdomain: 'api'}));
+    });
+
+    it('Should generate an url using an absolute url', function () {
+        const router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
+            homepage: {
+                tokens: [['text', '/bar']],
+                defaults: {},
+                requirements: {},
+                hosttokens: []
+            }
+        });
+
+        assert.equal('http://localhost/foo/bar', router.generate('homepage', {}, true));
+    });
+
+    it('Should generate an url using absolute url when scheme requirement given', function () {
+        const router = new Router({base_url: '/foo', host: "localhost", scheme: "http"}, {
+            homepage: {
+                tokens: [['text', '/bar']],
+                defaults: {},
+                requirements: {"_scheme": "http"},
+                hosttokens: []
+            }
+        });
+
+        assert.equal('http://localhost/foo/bar', router.generate('homepage', {}, true));
+    });
+
+    it('Should generate a path with optional trailing param', function () {
+        const router = new Router({base_url: ''}, {
+            posts: {
+                tokens: [['variable', '.', '', '_format'], ['text', '/posts']],
+                defaults: {},
+                requirements: {},
+                hosttokens: []
+            }
+        });
+
+        assert.equal('/posts', router.generate('posts'));
+        assert.equal('/posts.json', router.generate('posts', {'_format': 'json'}));
+    });
+
+    it('Should generate a path with query string without defaults', function () {
+        const router = new Router({base_url: ''}, {
+            posts: {
+                tokens: [['variable', '/', '[1-9]+[0-9]*', 'page'], ['text', '/blog-posts']],
+                defaults: {'page': 1},
+                requirements: {},
+                hosttokens: []
+            }
+        });
+
+        assert.equal('/blog-posts?extra=1', router.generate('posts', {page: 1, extra: 1}));
+    });
+
     // function testAllowSlashes() {
     //     const router = new Router({base_url: ''}, {
     //         posts: {
