@@ -203,83 +203,84 @@ describe('Test Router', () => {
         assert.equal('/blog-posts?extra=1', router.generate('posts', {page: 1, extra: 1}));
     });
 
-    // function testAllowSlashes() {
-    //     const router = new Router({base_url: ''}, {
-    //         posts: {
-    //             tokens: [['variable', '/', '.+', 'id'], ['text', '/blog-post']],
-    //             defaults: {},
-    //             requirements: {},
-    //             hosttokens: []
-    //         }
-    //     });
-    //
-    //     assert.equal('/blog-post/foo/bar', router.generate('posts', {id: 'foo/bar'}));
-    // }
-    //
-    // function testGenerateWithExtraParams() {
-    //     const router = new Router(undefined, {
-    //         foo: {
-    //             tokens: [['variable', '/', '', 'bar']],
-    //             defaults: {},
-    //             requirements: {},
-    //             hosttokens: []
-    //         }
-    //     });
-    //
-    //     assert.equal('/baz?foo=bar', router.generate('foo', {
-    //         bar: 'baz',
-    //         foo: 'bar'
-    //     }));
-    // }
-    //
-    // function testGenerateWithExtraParamsDeep() {
-    //     const router = new Router(undefined, {
-    //         foo: {
-    //             tokens: [['variable', '/', '', 'bar']],
-    //             defaults: {},
-    //             requirements: {},
-    //             hosttokens: []
-    //         }
-    //     });
-    //
-    //     assert.equal('/baz?foo%5B%5D=1&foo%5B1%5D%5B%5D=1&foo%5B1%5D%5B%5D=2&foo%5B1%5D%5B%5D=3&foo%5B1%5D%5B%5D=foo&foo%5B%5D=3&foo%5B%5D=4&foo%5B%5D=bar&foo%5B5%5D%5B%5D=1&foo%5B5%5D%5B%5D=2&foo%5B5%5D%5B%5D=3&foo%5B5%5D%5B%5D=baz&baz%5Bfoo%5D=bar+foo&baz%5Bbar%5D=baz&bob=cat',
-    //         router.generate('foo', {
-    //             bar: 'baz', // valid param, not included in the query string
-    //             foo: [1, [1, 2, 3, 'foo'], 3, 4, 'bar', [1, 2, 3, 'baz']],
-    //             baz: {
-    //                 foo: 'bar foo',
-    //                 bar: 'baz'
-    //             },
-    //             bob: 'cat'
-    //         }));
-    // }
-    //
-    // function testGenerateThrowsErrorWhenRequiredParameterWasNotGiven() {
-    //     const router = new Router({base_url: ''}, {
-    //         foo: {
-    //             tokens: [['text', '/moo'], ['variable', '/', '', 'bar']],
-    //             defaults: {},
-    //             requirements: {}
-    //         }
-    //     });
-    //
-    //     try {
-    //         router.generate('foo');
-    //         assert.fail('generate() was expected to throw an error, but has not.');
-    //     } catch (e) {
-    //         assert.equal('The route "foo" requires the parameter "bar".', e.message);
-    //     }
-    // }
-    //
-    // function testGenerateThrowsErrorForNonExistentRoute() {
-    //     const router = new Router({base_url: ''}, {});
-    //
-    //     try {
-    //         router.generate('foo');
-    //         assert.fail('generate() was expected to throw an error, but has not.');
-    //     } catch (e) {
-    //     }
-    // }
+    it("Should allow slashes", function () {
+        const router = new Router({base_url: ''}, {
+            posts: {
+                tokens: [['variable', '/', '.+', 'id'], ['text', '/blog-post']],
+                defaults: {},
+                requirements: {},
+                hosttokens: []
+            }
+        });
+
+        assert.equal('/blog-post/foo/bar', router.generate('posts', {id: 'foo/bar'}));
+    });
+
+    it('Should generate a path with extra params', function () {
+        const router = new Router(undefined, {
+            foo: {
+                tokens: [['variable', '/', '', 'bar']],
+                defaults: {},
+                requirements: {},
+                hosttokens: []
+            }
+        });
+
+        assert.equal('/baz?foo=bar', router.generate('foo', {
+            bar: 'baz',
+            foo: 'bar'
+        }));
+    });
+
+    it('Should generate a path with extra params deep', function () {
+        const router = new Router(undefined, {
+            foo: {
+                tokens: [['variable', '/', '', 'bar']],
+                defaults: {},
+                requirements: {},
+                hosttokens: []
+            }
+        });
+
+        assert.equal('/baz?foo%5B%5D=1&foo%5B1%5D%5B%5D=1&foo%5B1%5D%5B%5D=2&foo%5B1%5D%5B%5D=3&foo%5B1%5D%5B%5D=foo&foo%5B%5D=3&foo%5B%5D=4&foo%5B%5D=bar&foo%5B5%5D%5B%5D=1&foo%5B5%5D%5B%5D=2&foo%5B5%5D%5B%5D=3&foo%5B5%5D%5B%5D=baz&baz%5Bfoo%5D=bar+foo&baz%5Bbar%5D=baz&bob=cat',
+            router.generate('foo', {
+                bar: 'baz', // valid param, not included in the query string
+                foo: [1, [1, 2, 3, 'foo'], 3, 4, 'bar', [1, 2, 3, 'baz']],
+                baz: {
+                    foo: 'bar foo',
+                    bar: 'baz'
+                },
+                bob: 'cat'
+            }));
+    });
+
+    it("Should throw an error when required parameter wasn't given", function () {
+        const router = new Router({base_url: ''}, {
+            foo: {
+                tokens: [['text', '/moo'], ['variable', '/', '', 'bar']],
+                defaults: {},
+                requirements: {}
+            }
+        });
+
+        try {
+            router.generate('foo');
+            assert.fail('generate() was expected to throw an error, but has not.');
+        } catch (e) {
+            assert.equal('The route "foo" requires the parameter "bar".', e.message);
+        }
+    });
+
+    it("Should throw an error for non existent route",function () {
+        const router = new Router({base_url: ''}, {});
+
+        try {
+            router.generate('foo');
+            assert.fail('generate() was expected to throw an error, but has not.');
+        } catch (e) {
+        }
+    });
+
     //
     // function testGetBaseUrl() {
     //     const router = new Router({base_url: '/foo'}, {
